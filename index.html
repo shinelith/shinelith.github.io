@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css" title="Simple">
+  <style>
+    :root {
+      --theme-color: rgb(59, 163, 11);
+      --link-color:var(--theme-color);
+      --sidebar-name-font-size: 24px;
+      --sidebar-nav-pagelink-background-image: null;
+    }
+    footer{
+      margin-bottom:100px;
+    }
+    footer .left{
+      float:left;
+    }
+    footer .right{
+      float:right;
+    }
+    footer a{}
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+    name: 'ShineDoclib',
+	  nameLink: 'https://shinelith.github.io',
+    logo: '_media/logo.svg',
+    repo: '',
+	  loadSidebar: true,
+    auto2top: true,
+    autotitle: true,
+    loadNavbar: true,
+	  subMaxLevel: 10,
+	  formatUpdated: '此文档更新于 {YYYY}-{MM}-{DD} {HH}:{mm}',
+	  search: {
+      maxAge: 86400000,
+      paths: 'auto',
+      placeholder: {
+        '/': '搜索',
+      },
+      noData: {
+        '/': '找不到结果',
+      },
+      depth: 2
+    },
+	  
+    plugins: [
+      function (hook) {
+        var footer = [
+          '<hr/>',
+          '<footer>',
+          '<div class="left">{docsify-updated}</div>',
+          '<div class="right">shinedoclib <a href="https://github.com/lith">lith</a> &copy;2020</div>',
+          '</footer> '
+        ].join('')
+
+        hook.beforeEach(function (html) {
+          return html + footer
+        })
+      }],
+
+      themeable: {
+          readyTransition : true, // default
+          responsiveTables: true  // default
+      },
+    }
+
+  </script>
+  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <!-- docsify-themeable -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0"></script>
+  <!-- 全文搜索 - Search -->
+  <script src="//unpkg.com/docsify/lib/plugins/search.js"></script>
+  <!-- 图片缩放 - Zoom image -->
+  <script src="//unpkg.com/docsify/lib/plugins/zoom-image.js"></script>
+  <!--复制到剪贴板-->
+  <script src="//unpkg.com/docsify-copy-code"></script>
+
+</body>
+</html>
