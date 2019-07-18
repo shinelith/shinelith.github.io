@@ -1,4 +1,6 @@
-# entry.8lua 文件格式
+# entry.lua 文件格式
+
+## 说明
 
 entry.lua会被自动调用，所以它也作为MOD的入口或定义使用。
 
@@ -21,7 +23,7 @@ entry.lua会被自动调用，所以它也作为MOD的入口或定义使用。
 * mount_vfs_liveries_path(current_mod_path..'/Liveries')                                --挂载涂装
 * declare_plugin(unique_plugin_id,info_table)                --定义模组
 
-## entry.lua
+## 范例
 
 DCS 模组的入口函数，任何MOD文件夹中的entry.lua会在DCS加载过程中执行。
 
