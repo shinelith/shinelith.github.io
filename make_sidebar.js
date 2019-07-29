@@ -36,9 +36,16 @@ var walker = walk.walk(__dirname + '/doc');
 // 按目录遍历md文件
 walker.on('files', function(roots, stat, next) {
     // 生成分类
-    var category = menuTitle(path.basename(roots));
-    _sidebar += menuCategory(category)
-
+	var categoryName = path.basename(roots);
+	// 跳过这些文件夹
+	var skinFolder = [
+		"assets",
+		"attachment",
+	];
+	if(skinFolder.indexOf(categoryName) == -1){
+		var category = menuTitle(categoryName);
+		_sidebar += menuCategory(category)
+	}
     // 生成菜单项
     for(var file of stat) {
         if(path.extname(file.name) == '.md'){
