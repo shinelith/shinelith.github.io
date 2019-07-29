@@ -8,8 +8,6 @@
   * [L1 创建MOD目录结构](doc/DCS_World_模组开发/L1_创建MOD目录结构.md)
   * [L2 3DMAX](doc/DCS_World_模组开发/L2_3DMAX.md)
   * [L3 基础动画](doc/DCS_World_模组开发/L3_基础动画.md)
-* **attachment**
-* **assets**
 * **DCS World 开发文档**
   * [DCS ControlAPI](doc/DCS_World_开发文档/DCS_ControlAPI.md)
   * [entry lua](doc/DCS_World_开发文档/entry_lua.md)
