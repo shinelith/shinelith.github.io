@@ -246,7 +246,7 @@ NewAir =  {
 	H_max 					 	= 21000, -- 最大升线 m
 	average_fuel_consumption 	= 0.5, -- 平均油耗 kg/s this is highly relative, but good estimates are 36-40l/min = 28-31kg/min = 0.47-0.52kg/s -- 45l/min = 35kg/min = 0.583kg/s
 	CAS_min 					= 50, -- if this is not OVERAL FLIGHT TIME, but jus LOITER TIME, than it shuh                                    *olud be 10-15 minutes.....CAS capability in minute (for AI)
-	V_opt 						= 300, -- AI巡航速度 m/s
+	V_opt 						= 300, -- AI巡航速度 m/s 20000ft0.8马赫=491节=252m/s
 	V_take_off 					= 100, -- AI离地速度 m/s
 	V_land 						= 100, -- AI着陆速度 m/s
 	V_max_sea_level 			= 400, -- AI海平面最大速度 m/s
@@ -263,8 +263,8 @@ NewAir =  {
 	has_speedbrake 				= true, -- 是否有减速板
 	nose_gear_pos 				= {  3.3,	-2,	0}, -- 前起落架坐标
 	main_gear_pos 				= { -1.5,	-2,	2}, -- 主起落架坐标
-	tand_gear_max 				= 0.4,
-	tanker_type 				= 0, -- Tanker type if the plane is airrefuel capable
+	tand_gear_max 				= 0.4, --前轮转向最大旋转角度的正切值 1.0表示最大前轮旋转+/-45度tan(45)=1  3.0=+/-71.56度
+	tanker_type 				= 0, -- 收油口类型 0=无 1=硬管 2=美式漏斗 3(未使用) 4=俄式漏斗
 	wing_area 					= 40, -- 机翼面积 平米
 	wing_span 					= 14, -- wing spain in m
 	wing_type 					= 0, -- 固定翼 = 0
@@ -274,7 +274,7 @@ NewAir =  {
 	height 						= 5, -- 高度 m
 	flaps_maneuver 				= 0.5, -- AI起飞时的襟翼形态 (0.5 = 形态1; 1.0 = 形态2) 
 	range 						= 2000, -- AI最大范围直径 km
-	RCS 						= 5, -- 雷达截面积 平米
+	RCS 						= 5, -- 雷达截面积 平米 3dmax front视图
 	IR_emission_coeff 			= 0.62, -- 引擎红外辐射系数（正常情况） 作为参考，Su-27不开加力时的系数为1 
 	IR_emission_coeff_ab 		= 1.02, -- 引擎红外辐射系数（加力）
 	wing_tip_pos 				=  {-2,	2, 7}, -- wingtip coords for visual effects
