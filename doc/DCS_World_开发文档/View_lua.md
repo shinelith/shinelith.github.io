@@ -1,8 +1,32 @@
-# View 视角 文件格式
+# 视角
 
-位置MOD\View.lua
+视角配置有固定的变量名`ViewSettings`，它有2种方式来应用视角的配置
 
-文件结构为
+* 在add_aircraft的参数里设置
+
+  ```lua
+  MiG_19P = {
+  	Name = 'MiG-19P',
+  	DisplayName = _('MiG-19P'),
+      ...
+  	ViewSettings = ViewSettings,
+      SnapViews = SnapViews,
+  }
+  add_aircraft(MiG_19P)
+  ```
+
+* 在entry.lua中调用`make_view_settings(AircraftName,ViewSettings,SnapViews)`
+
+  ```lua
+  declare_plugin()
+  dofile(current_mod_path.."/views.lua")
+  make_view_settings('Su-35', ViewSettings, SnapViews)
+  plugin_done()
+  ```
+
+**推荐采用一个单独的View.lua文件中配置视角**
+
+## 结构
 
 ```lua
 ViewSettings = {
@@ -22,7 +46,7 @@ SnapViews = {
 }
 ```
 
-## Cockpit
+## Cockpit 视角 (F1)
 
 ```lua
 Cockpit = {
@@ -52,21 +76,20 @@ Cockpit = {
 },
 ```
 
-## Chase & Arcade 跟随(F4)视角和游戏视角
+## Chase & Arcade 跟随视角(F4)和游戏模式视角
 
 ```lua
 Chase = {
-  LocalPoint      = {-5.0,1,3.0},						--摄影机位置，后5米，高度1米，偏右3米
-  AnglesDefault   = {0.0,0.0},							--摄影机角度
+  LocalPoint     = {-5.0,1,3.0},--摄影机位置，后5米，高度1米，偏右3米
+  AnglesDefault  = {0.0,0.0},--摄影机角度，向x轴方向看
 },
-
 Arcade = {
-  LocalPoint		= {-21.5,5.618,0.0},		 	--摄影机位置，后21.5米，高5.618米，水平正中
-  AngleDefault		= {0.0,-8.0},							--摄影机角度，向下看8度
+  LocalPoint	 = {-21.5,5.618,0.0},--摄影机位置，后21.5米，高5.618米，水平正中
+  AngleDefault	 = {0.0,-8.0},--摄影机角度，向下看8度
 },
 ```
 
-## Snap Views预设视角
+## Snap Views 预设视角
 
 预设视角是预先设置的若干个视角位置，使用快捷键进行切换。可以自定义机载设备的放大视角，比如雷达或MFCD。SnapView最多设置10个。
 
@@ -84,13 +107,17 @@ SnapViews = {							--预设视角
   [2] = {
     ...
   },
-}
+},
 ```
 
-## 如何创建预设视角
+## 创建自定义视角和预设视角
+
+* 创建自定义视角
 
 在游戏中使用`RALT+Num0`可保存用户自定义视角，保存的视角会作为`Num5`默认中心视角，并会永久保存。
 
 用户自定义视角配置文件被保存在 Saved Game\DCS\Config\View\SnapViews.lua中的default view中。
 
-可以拷贝生成的代码，到MOD\Views.lua中即可
+* 创建预设视角
+
+将自定义视角生成的代码拷贝到到`View.lua`的SnapViews对象里。

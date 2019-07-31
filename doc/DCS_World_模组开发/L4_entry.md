@@ -1,179 +1,36 @@
-# L1 MOD的初始化
+# Entry.lua
 
-
-
-## 目录结构
-
-修改DCS系统自身的文件会导致红盾，且被修改后文件的哈希值会发生变化，在进行更新时DCS_Updater会将修改还原，所以不要修改DCS\目录中的文件。官方推荐在`X:\Users\<username>\Saved Games\DCS\Mod\`中添加第三方的MOD。
-
-进入 `X:\Users\<username>\Saved Games\DCS\` 目录，新建`Mods\tech\newair`目录。
-
-新建`entry.lua`。
-
-![1563954367927](assets/1563954364945.png)
-
-## entry.lua
-
-`entry.lua`会在DCS启动前被回调，可以在entry.lua中引用其他的lua文件。在entry.lua中可使用的API与Hooks不同，相比Hooks会更少。具体可调用的成员和方法在DCS\Scripts\Database\db_mods.lua中的make_environment方法中的env中定义。
+## 实例
 
 ```lua
-local env = {
-    table                  = table, 
-    pairs                  = pairs,
-    ipairs                 = ipairs,
-    type                   = type,
-    assert                 = assert_,
-    print                  = print_,
-    math                   = math,
-    tostring               = tostring,
-    _ = _,
-    --some global defines
-    __DCS_VERSION__		   =  __DCS_VERSION__,
-    __FINAL_VERSION__	   =  __FINAL_VERSION__,
-    ED_FINAL_VERSION		= __FINAL_VERSION__,
-    ED_PUBLIC_AVAILABLE		= ED_PUBLIC_AVAILABLE,
-    USE_TERRAIN4			= true,
-
-    mount_vfs_model_path	= mount_vfs_model_path,
-    mount_vfs_texture_path	= mount_vfs_texture_path,
-    mount_vfs_liveries_path	= mount_vfs_liveries_path,
-    mount_vfs_sound_path	= mount_vfs_sound_path,
-    declare_plugin			= declare_plugin,
-    plugin_done				= plugin_done,
-    WSTYPE_PLACEHOLDER		= WSTYPE_PLACEHOLDER,
-    --weapon loadout declaration
-    CAT_BOMBS 	 			= CAT_BOMBS,
-    CAT_MISSILES   			= CAT_MISSILES,
-    CAT_ROCKETS	 			= CAT_ROCKETS, --!unguided!
-    CAT_AIR_TO_AIR 			= CAT_AIR_TO_AIR,
-    CAT_FUEL_TANKS 			= CAT_FUEL_TANKS,
-    CAT_PODS	 	 		= CAT_PODS,
-    CAT_SHELLS				= CAT_SHELLS,
-    CAT_GUN_MOUNT	 		= CAT_GUN_MOUNT,
-    CAT_CLUSTER_DESC		= CAT_CLUSTER_DESC,
-    declare_weapon			= declare_weapon,
-    declare_loadout			= declare_loadout,	
-    cluster_desc			= cluster_desc,		
-    combine_cluster			= combine_cluster,
-    --warheads 
-    simple_aa_warhead			=	simple_aa_warhead,							
-    enhanced_a2a_warhead        =   enhanced_a2a_warhead,
-    directional_a2a_warhead     =   directional_a2a_warhead,
-    simple_warhead              =   simple_warhead,
-    cumulative_warhead          =   cumulative_warhead,
-    penetrating_warhead         =   penetrating_warhead,
-    antiship_penetrating_warhead=   antiship_penetrating_warhead,
-    predefined_warhead 			=   predefined_warhead,
-
-    get_bomb_munition		= function(nm) return weapons_table.weapons.bombs[nm] end,
-    PTAB_2_5_DATA			= PTAB_2_5_DATA,
-    PTAB_10_5_DATA 			= PTAB_10_5_DATA,
-    AO_2_5_DATA				= AO_2_5_DATA,
-    MK118_DATA				= MK118_DATA,
-    BLU97B_DATA				= BLU97B_DATA,
-    BLU108B_DATA			= BLU108B_DATA,
-    HEAT_DATA				= HEAT_DATA,
-
-    add_aircraft           = add_aircraft,
-    pylon                  = pylon,
-    aircraft_task          = aircraft_task,
-    gun_mount              = gun_mount,
-    smoke_effect 		   = smoke_effect,
-    fire_effect 		   = fire_effect,
-    declare_gun_mount	   = declare_gun_mount,
-    --tasks
-    Nothing                 = Nothing,          
-    SEAD                    = SEAD,            
-    AntishipStrike          = AntishipStrike,  
-    AWACS                   = AWACS,           
-    CAS                     = CAS,             
-    CAP                     = CAP ,            
-    Escort                  = Escort,          
-    FighterSweep            = FighterSweep ,   
-    GroundAttack            = GroundAttack ,   
-    Intercept               = Intercept   ,    
-    AFAC                    = AFAC        ,    
-    PinpointStrike          = PinpointStrike,   
-    Reconnaissance          = Reconnaissance , 
-    Refueling               = Refueling      , 
-    RunwayAttack            = RunwayAttack   , 
-    Transport               = Transport     ,
-    MODULATION_AM			= MODULATION_AM,
-    MODULATION_FM			= MODULATION_FM,
-    LOOK_BAD				= LOOK_BAD,
-    LOOK_AVERAGE			= LOOK_AVERAGE,
-    LOOK_GOOD				= LOOK_GOOD,
-    LOOK_EXELLENT_B17 		= LOOK_EXELLENT_B17,
-    add_unit_to_country		= add_unit_to_country,
-    makeAirplaneCanopyGeometry = makeAirplaneCanopyGeometry,
-    makeHelicopterCanopyGeometry = makeHelicopterCanopyGeometry,
-    verbose_to_dmg_properties = verbose_to_dmg_properties, --damage
-    set_manual_path		   	  = function(unit,manual_path)  		   various_unit_settings(unit,{ManualPath = manual_path}) end,
-    make_view_settings		  = function(unit,ViewSettings,SnapViews)  various_unit_settings(unit,{ViewSettings = ViewSettings,SnapViews    = SnapViews}) end,
-    --ground units adding support------------------------------
-    set_recursive_metatable = set_recursive_metatable,
-    new_reference			= new_reference,
-    add_launcher            = add_launcher,
-    add_surface_unit        = add_surface_unit,
-    GT_t                    = db.Units.GT_t,
-    ------------------------------------------------------------	
-    -- sensors declaration
-    SENSOR_OPTICAL      = SENSOR_OPTICAL,
-    SENSOR_RADAR        = SENSOR_RADAR,
-    SENSOR_IRST         = SENSOR_IRST,
-    SENSOR_RWR          = SENSOR_RWR,
-    --RADAR
-    RADAR_AS            = RADAR_AS,
-    RADAR_SS            = RADAR_SS,
-    RADAR_MULTIROLE     = RADAR_MULTIROLE,
-    --
-    ASPECT_HEAD_ON      = ASPECT_HEAD_ON,
-    ASPECT_TAIL_ON      = ASPECT_TAIL_ON,
-    --
-    HEMISPHERE_UPPER    = HEMISPHERE_UPPER,
-    HEMISPHERE_LOWER    = HEMISPHERE_LOWER,
-    --IRST
-    ENGINE_MODE_FORSAGE = ENGINE_MODE_FORSAGE,
-    ENGINE_MODE_MAXIMAL = ENGINE_MODE_MAXIMAL,
-    ENGINE_MODE_MINIMAL = ENGINE_MODE_MINIMAL,
-    --OPTIC
-    OPTIC_SENSOR_TV     = OPTIC_SENSOR_TV,
-    OPTIC_SENSOR_LLTV   = OPTIC_SENSOR_LLTV,
-    OPTIC_SENSOR_IR     = OPTIC_SENSOR_IR,
-
-    FIXED_WING					= FIXED_WING,				
-    VARIABLE_GEOMETRY			= VARIABLE_GEOMETRY,
-    FOLDED_WING					= FOLDED_WING,				
-    VARIABLE_GEOMETRY_FOLDED 	= VARIABLE_GEOMETRY_FOLDED, 
-
-    declare_sensor		= declare_sensor,
-    make_default_mech_animation = make_default_mech_animation,
-    ------------------------------------------------------------	
-}
-```
-
-## DEMO
-
-```lua
+passivCounterm
 local self_ID = "NewAir"
 
 declare_plugin(self_ID,
 {
-	displayName = _("NewAirplane"), --显示名
-	developerName = "lith",	--开发者名称
-	
-	installed = true,
-	dirName = current_mod_path,
-	version = "0.0.1.dev",
-	state = "installed",
-	info = "",
-	
+	displayName = _("NewAirplane"),	--显示名
+	developerName = "lith",			--开发者名称
+	installed = true,				--安装状态
+	dirName = current_mod_path,		--MOD目录
+	version = "0.0.1.dev",			--版本号
+	state = "installed",			--状态
+	info = "",						--介绍文字
+	creditsFile = "credits.txt",	--MOD作者信息
+    
+    --DCS主界面配图
+    Skins = {
+        {
+            name = _("NewAir"),
+            dir = "Theme"
+        },
+    }
 })
 
-
---挂载3D模型、涂装、贴图路径
+-- 设置3D模型路径
 mount_vfs_model_path(current_mod_path.."/Shapes")
+-- 设置涂装路径
 mount_vfs_liveries_path(current_mod_path.."/Liveries")
+-- 设置纹理路径
 mount_vfs_texture_path(current_mod_path.."/Textures")
 
 
@@ -327,24 +184,19 @@ NewAir =  {
 	},
 	
 	-- 对抗
-	SingleChargeTotal	 	= 120,
-	CMDS_Incrementation 	= 4,
-	ChaffDefault 			= 64, 
-	ChaffChargeSize 		= 1,
-	FlareDefault 			= 64, 
-	FlareChargeSize 		= 1,
-	CMDS_Edit 				= true,
-	
-	-- 新的对抗配置代码 TODO 验证有效性
-	-- passivCounterm = {
-		-- CMDS_Edit = true,
-		-- SingleChargeTotal = 162,
-		-- chaff = {default = 112, increment = 112, chargeSz = 1},
-		-- flare = {default = 16,  increment = 16, chargeSz = 1},
-	-- },
-	
-	
-	chaff_flare_dispenser 	= {  --铂条 红外干扰弹布撒
+	passivCounterm = {
+		CMDS_Edit = true, --是否允许地勤菜单调整flare和chaff的数量
+        -- flare chaff 的总数
+        -- = chaff.default * chaff.chargeSz + flare.default * flare.chargeSz
+		SingleChargeTotal = 120, 
+        -- default 布撒器容量
+        -- increment 调整数量时的步进量
+        -- chargeSz 布撒器个数
+		chaff = {default = 60, increment = 10, chargeSz = 1},
+		flare = {default = 30,  increment = 5, chargeSz = 2},
+	},
+
+	chaff_flare_dispenser = {  --铂条 红外干扰弹布撒
 		-- 调用drop_flares和drop_chaff时应从序号0开始(lua数组以1开始)
 		[1] = {
 			dir = {0, -1, -1}, -- 抛射方向的向量{X,Y,Z}
@@ -356,27 +208,36 @@ NewAir =  {
 		}
 	},
 
-	--传感器
-	detection_range_max = 60,	--最大探测距离 km
-	radar_can_see_ground = true, -- this should be examined (what is this exactly?)
+	-- 传感器
+	detection_range_max = 60, --最大探测距离 km
+	radar_can_see_ground = true, --雷达是否可以识别地面单位（未验证）
 	
-	CanopyGeometry = {
-		azimuth   = {-160.0, 160.0}, -- AI飞行员水平视角 度
-		elevation = {-50.0, 90.0} -- AI飞行员垂直视角 度
-	},
-	
+    -- 座舱内的观察性能
+    -- makeAirplaneCanopyGeometry(lookForward,lookSide,lookRear)
+    -- LOOK_BAD = 1
+    -- LOOK_AVERAGE = 2
+    -- LOOK_GOOD = 3
+    -- LOOK_AVERAGE_UH = 4
+    -- LOOK_EXELLENT_B17 = 5
+	CanopyGeometry = makeAirplaneCanopyGeometry(LOOK_AVERAGE, LOOK_AVERAGE, LOOK_AVERAGE),
+    
+    -- 参见DCS/Scripts/Database/db_sensors.lua
 	Sensors = {
 		RWR = "Abstract RWR", -- RWR类型
 		RADAR = "N-019", -- Radar类型
 		-- ...
 	},
 	
+    
 	HumanRadio = {
-		frequency = 127.5,  -- 无线电频率 默认值251.0
-		editable = true,	-- 可操作 默认值 true
-		minFrequency = 100.000,	--最小频率 默认值 225.000
-		maxFrequency = 156.000,	--最大频率 默认值 399.975
-		modulation = MODULATION_AM  --AM电台 默认值 MODULATION_AM
+		frequency = 127.5, -- 无线电频率 默认值251.0
+		editable = true, -- 可操作 默认值 true
+		minFrequency = 100.000, --最小频率 默认值 225.000
+		maxFrequency = 156.000, --最大频率 默认值 399.975
+        -- MODULATION_AM = 0
+        -- MODULATION_FM = 1
+        -- MODULATION_AM_AND_FM = 2
+		modulation = MODULATION_AM --AM电台 默认值 MODULATION_AM
 	},
 	
 	--机炮配置项
@@ -387,7 +248,7 @@ NewAir =  {
 			muzzle_pos 		  = {1, -0.5, -1}, --枪口的模型坐标
 			elevation_initial = 2.000,
 			supply_position   = {1, 0, 0},
-			effect_arg_number = 350,
+			effect_arg_number = 350, --效果动画编号
 		}),
 		-- 如果还有其他的机炮
 	},
@@ -395,7 +256,7 @@ NewAir =  {
 	--挂载配置项
 	Pylons = {
 		-- 会影响挂载页的功能
-		-- pylon(编号,0,X坐标,Y坐标,Z坐标,模型相关的对象,可挂载的武器)
+		-- pylon(编号,0,X坐标,Y坐标,Z坐标,与模型相关的参数,可挂载的武器)
         pylon(1, 0, 0.660000, -0.078000, -3.325000, -- 
             {
 				use_full_connector_position = true,
@@ -427,7 +288,7 @@ NewAir =  {
 				{ CLSID = "{GBU-38}"},
 				{ CLSID = "{CAE48299-A294-4bad-8EE6-89EFC5DCDF00}"}, -- SU-25
 				{ CLSID = "{CBU-87}"},
-				{ CLSID = "{5335D97A-35A5-4643-9D9B-026C75961E52}"}, -- CBU-97
+				{ CLSID = "{5335D97A-35A5-4643-9D9B-026C   75961E52}"}, -- CBU-97
 				{ CLSID = "{CBU_103}"},			
 				{ CLSID = "{CBU_105}"},
 				{ CLSID = "{444BA8AE-82A7-4345-842E-76154EFCCA46}"}, -- AGM-65D LAU-117
@@ -1143,3 +1004,13 @@ add_aircraft(NewAir)
 plugin_done()
 ```
 
+## 武器配载
+
+* guns 机炮
+* bombs
+* unguided rockets
+* A-A missiles
+* A-G missiles
+* Countermeasure pods
+* Fuel tanks
+* Rack

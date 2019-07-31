@@ -1,4 +1,4 @@
-# L3 基础动画
+# L3 EDM动画
 
 [3D MAX 实例文件](attachment\L3paper.max)
 
