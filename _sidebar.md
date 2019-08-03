@@ -4,10 +4,13 @@
   * [DCS Ping Test](doc/DCS_项目/DCS_Ping_Test.md)
   * [DCS Track Miz](doc/DCS_项目/DCS_Track_Miz.md)
 * **DCS World 模组开发**
-  * [L0.前言](doc/DCS_World_模组开发/L0.前言.md)
-  * [L1 创建MOD目录结构](doc/DCS_World_模组开发/L1_创建MOD目录结构.md)
-  * [L2 3DMAX](doc/DCS_World_模组开发/L2_3DMAX.md)
-  * [L3 基础动画](doc/DCS_World_模组开发/L3_基础动画.md)
+  * [L0 前言](doc/DCS_World_模组开发/L0_前言.md)
+  * [L1 目录结构](doc/DCS_World_模组开发/L1_目录结构.md)
+  * [L2 3DMAX基础](doc/DCS_World_模组开发/L2_3DMAX基础.md)
+  * [L3 EDM动画](doc/DCS_World_模组开发/L3_EDM动画.md)
+  * [L4 entry](doc/DCS_World_模组开发/L4_entry.md)
+  * [L5 declare plugin](doc/DCS_World_模组开发/L5_declare_plugin.md)
+  * [L6 flayable](doc/DCS_World_模组开发/L6_flayable.md)
 * **DCS World 开发文档**
   * [DCS ControlAPI](doc/DCS_World_开发文档/DCS_ControlAPI.md)
   * [entry lua](doc/DCS_World_开发文档/entry_lua.md)

@@ -95,11 +95,16 @@ NewAir =  {
 	Categories = {
 		"{78EFB7A2-FD52-4b57-A6A6-3BF0E1D6555F}", "Interceptor",
 	},
-	
-	M_empty 					= 8000, -- 包含飞行员和nose load的重量 kg
-	M_nominal 					= 10000, -- 零油重 Empty Plus Full Internal Fuel kg
+    
+    -- M_empty 显示在挂载页中的"无挂载"
+	M_empty 					= 8000, --  包含飞行员，去除挂载、燃油的重量 kg
+    
+	M_nominal 					= 10000, -- Empty Plus Full Internal Fuel kg
+    -- M_max 显示在挂载页中的"最大" 
 	M_max 						= 12000, -- 最大起飞重量 kg
-	M_fuel_max 					= 4000, -- 最大燃油的重量 kg （仅油的重量）
+    -- M_fuel_max 显示在挂载页中的"燃油重量"（内油100%时）
+	M_fuel_max 					= 4000, -- 最多能带多重的油 kg
+    
 	H_max 					 	= 21000, -- 最大升线 m
 	average_fuel_consumption 	= 0.5, -- 平均油耗 kg/s this is highly relative, but good estimates are 36-40l/min = 28-31kg/min = 0.47-0.52kg/s -- 45l/min = 35kg/min = 0.583kg/s
 	CAS_min 					= 50, -- if this is not OVERAL FLIGHT TIME, but jus LOITER TIME, than it shuh                                    *olud be 10-15 minutes.....CAS capability in minute (for AI)
