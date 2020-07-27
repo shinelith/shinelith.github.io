@@ -31,7 +31,7 @@ var menuTitle = function(s){
 }
 
 var _sidebar = menuHome();
-var walker = walk.walk(__dirname + '/doc');
+var walker = walk.walk(__dirname + '/docs');
 
 // 按目录遍历md文件
 walker.on('files', function(roots, stat, next) {
